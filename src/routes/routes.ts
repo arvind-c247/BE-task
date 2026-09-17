@@ -3,6 +3,7 @@ import { analyticsRouter } from "../analytics/analytics.routes";
 import { urlsRouter } from "../urls/urls.routes";
 import { apiRateLimiter } from "../shared/middleware/rateLimit";
 import { auth } from "../shared/middleware/auth";
+import { fileRouter } from "../fileUpload/files.routes";
 
 const router = Router();
 
@@ -15,6 +16,7 @@ router.use(apiRateLimiter);
 router.use(auth);
 
 router.use("/analytics", analyticsRouter);
+router.use("/file", fileRouter);
 router.use(urlsRouter);
 
 export default router;

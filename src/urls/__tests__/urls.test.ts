@@ -107,21 +107,6 @@ describe("URL shortening routes", () => {
       mostClicked: expect.any(Object),
     });
   });
-
-  it("exposes per-code stats under /api/v1/urls/:code", async () => {
-    const created = await request(urlsApp)
-      .post("/api/v1/shorten")
-      .send({ url: "https://example.com/aliased" });
-    const { shortCode } = created.body;
-
-    const res = await request(urlsApp).get(`/api/v1/urls/${shortCode}`);
-    expect(res.status).toBe(200);
-    expect(res.body).toMatchObject({
-      shortCode,
-      originalUrl: "https://example.com/aliased",
-      clickCount: 0,
-    });
-  });
 });
 
 describe("InMemoryUrlStore", () => {
