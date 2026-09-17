@@ -1,7 +1,12 @@
 import { Request, Response, NextFunction } from "express";
-import { ZodSchema, ZodError } from "zod";
+import { ZodTypeAny } from "zod";
 
-export const validate = (schema: ZodSchema) => {
+/**
+ * Validates the request (body/query/params) and forwards any error to the
+ * global error handler in shared/utils/errorHandler.ts, which formats
+ * ZodError into a consistent 400 JSON response.
+ */
+export const validate = (schema: ZodTypeAny) => {
   return (req: Request, res: Response, next: NextFunction) => {
     try {
       schema.parse({
@@ -11,14 +16,6 @@ export const validate = (schema: ZodSchema) => {
       });
       next();
     } catch (err) {
-      if (err instanceof ZodError) {
-        return res.status(400).json({
-          errors: err.errors.map((e) => ({
-            path: e.path.join("."),
-            message: e.message,
-          })),
-        });
-      }
       next(err);
     }
   };

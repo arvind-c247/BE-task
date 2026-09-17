@@ -13,3 +13,7 @@ understand the concept of status codes (HTTP protocol)
 
 install postgresql:- sudo apt install postgresql postgresql-contrib
 verify psql --version
+
+
+`sudo -u postgres psql -c "CREATE DATABASE test_task_db;"
+sudo -u postgres psql -c "ALTER USER postgres PASSWORD 'postgres';"`
